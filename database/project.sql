@@ -257,3 +257,4 @@ SET
   inv_thumbnail = REPLACE(inv_thumbnail, 'es', 'es/vehicles');
 
 
+--love
