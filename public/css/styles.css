@@ -8,17 +8,23 @@
 
 
 .menu {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  padding: 10px;
+  /* display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
+  padding: 8px;
   background-color: black;
+  text-align: center;
+  white-space: nowrap;
+  overflow-x: auto;
   
   
 }
 
 .menu a {
+  display: inline-block;
   text-decoration: none;
   color: white;
+  padding: 6px;
+  
 }
 
 #top-header {
