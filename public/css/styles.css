@@ -27,6 +27,11 @@
   
 }
 
+.menu a:hover{
+  background-color: aqua;
+  color: black;
+}
+
 #top-header {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -76,7 +81,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  /* color: rgb(26, 26, 26); */
 }
 
 .hero-text {
@@ -182,5 +187,26 @@
     border-bottom-left-radius: 14px;
     border-bottom-right-radius: 14px;
   }
+
+  #inv-display {
+    background-color: white;
+    margin-bottom: -10px;
+    padding-bottom: 20px;
+    margin-top: -82px;
+    padding-top: 100px;
+    padding-left: 20px;
+    
+    
+
+  }
   
+  .error-back {
+    background-color: white;
+    margin-bottom: -16px;
+    padding-bottom: 10px;
+    margin-top: -5px;
+    padding-top: 10px;
+    padding-left: 10px;
+
+  }
 }
