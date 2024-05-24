@@ -1,0 +1,50 @@
+<div class="register-page">
+    <h1 class="title-register"><%= title %></h1>
+
+    <!-- Flash Message Display -->
+    <% if (typeof messages !== 'undefined' && messages.length > 0) { %>
+    <div class="flash-messages">
+        <% messages.forEach(function(message) { %>
+        <p class="flash-message"><%= message %></p>
+        <% }); %>
+        
+    </div>
+    <% } %>
+
+    <% if (errors) { %>
+        <ul class="notice">
+       <% errors.array().forEach(error => { %>
+         <li><%= error.msg %></li>
+      <%  }) %>
+       </ul>
+      <% } %>
+
+    <!-- Registration Form -->
+    <form action="/account/register" method="POST" class="register-form">
+        <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email address:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
+            <small>Password must be at least 12 characters, contain at least 1 capital letter, 1 number, and 1 special character.</small>
+        </div>
+
+        <button class="button1" type="submit">Register</button>
+    </form>
+
+    <!-- Login Link -->
+    <p>Already have an account? <a href="/account/login">Login here</a>.</p>
+</div>

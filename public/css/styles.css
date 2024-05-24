@@ -101,6 +101,13 @@
 
 }
 
+.hero-button:hover {
+  background-color: #0056b3;
+  color: white;
+  font-weight: 500;
+
+}
+
 .upgrades {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -154,6 +161,7 @@
   flex-wrap: wrap;
   align-items: center;
 }
+
 .vehicle-details img {
   width: 50%;
   max-width: 500px;
@@ -168,6 +176,79 @@
 footer {
   margin-top: auto;
   padding: 10px;
+}
+
+.login-page {
+  /* max-width: 600px; */
+  margin: 50px auto;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: -1px;
+  margin-bottom: -1px;
+}
+
+.title-login {
+  text-align: center;
+}
+.flash-messages {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #007BFF;
+  background-color: #0056b3;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.title-register {
+  text-align: center;
+}
+
+.button1 {
+  width: 100%;
+  padding: 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.button1:hover {
+  background-color: #0056b3;
+}
+
+.register-page {
+  background-color: white;
+  padding: 20px;
+  margin-top: -1px;
+  margin-bottom: -1px;
+
+}
+
+/* p {
+  text-align: center;
+}
+
+a {
+  color: #007BFF;
+  text-decoration: none;
+} */
+
+a:hover {
+  text-decoration: underline;
 }
 
 @media only screen and (min-width: 38rem) {
