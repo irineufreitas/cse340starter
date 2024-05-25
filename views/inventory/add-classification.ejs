@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Classification</title>
+
+    <script>
+        // Client-side validation
+        function validateForm() {
+            const classificationName = document.getElementById('classificationName').value;
+            const regex = /^[a-zA-Z0-9]+$/; // Only allow alphanumeric characters
+
+            if (!regex.test(classificationName)) {
+                alert('Classification name cannot contain spaces or special characters.');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<div class="classification-body">
+    <h1>Add New Classification</h1>
+    
+
+    <% if (messages && messages.length > 0) { %>
+        <div class="flash-messages">
+            <% messages.forEach(function(message) { %>
+                <p class="flash-message"><%= message %></p>
+            <% }); %>
+        </div>
+    <% } %>
+
+    <!-- Form to add classification -->
+    <form action="/inv/classification/add" method="post" onsubmit="return validateForm()">
+        <div class="form-group">
+            <label for="classificationName">Classification Name</label>
+            <input type="text" id="classificationName" name="classificationName" required>
+            <small>Classification name cannot contain a space or special character.</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Classification</button>
+    </form>
+</div>
+    
+</div>
+</html>
+

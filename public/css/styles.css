@@ -108,6 +108,8 @@
 
 }
 
+
+
 .upgrades {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -148,6 +150,7 @@
   background-color: aqua;
   padding: 10px;
   font-size: 20px;
+  color: black;
 }
 
 .container1 {
@@ -216,20 +219,73 @@ input[type="password"] {
 .title-register {
   text-align: center;
 }
+.management-body, .classification-body, .inventory-body {
+  background-color: white;
+  margin-top: -1px;
+  padding: 20px;
+  text-align: center;
+}
 
 .button1 {
-  width: 100%;
+  width: 50%;
   padding: 10px;
   background-color: #007BFF;
   color: white;
-  border: none;
+  border: #19426e;
+  border-style: solid;
   cursor: pointer;
+  margin-top: 10px;
+  
+  
 }
 
 .button1:hover {
   background-color: #0056b3;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+input[type="text"],
+input[type="number"],
+
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+/* Styles for validation feedback */
+input[type="text"].invalid,
+input[type="number"].invalid,
+textarea.invalid,
+select.invalid {
+  border-color: red;
+}
+
+input[type="text"].valid,
+input[type="number"].valid,
+textarea.valid,
+select.valid {
+  border-color: green;
+}
+
+textarea {
+  height: 100px;
+  resize: vertical;
+}
 .register-page {
   background-color: white;
   padding: 20px;
@@ -238,14 +294,21 @@ input[type="password"] {
 
 }
 
-/* p {
-  text-align: center;
+.form-group1 {
+  margin-bottom: 15px;
+}
+
+.notice {
+  color: red;
+  list-style-type: none;
+  padding: 0;
+  margin: 0 0 15px 0;
 }
 
 a {
-  color: #007BFF;
+  
   text-decoration: none;
-} */
+}
 
 a:hover {
   text-decoration: underline;

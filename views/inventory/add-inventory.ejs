@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Inventory</title>
+
+    
+</head>
+<div class="inventory-body">
+    <h1><%= title %></h1>
+
+    <% if (messages && messages.length > 0) { %>
+        <div class="flash-messages">
+            <% messages.forEach(function(message) { %>
+            <p class="flash-message"><%= message %></p>
+            <% }); %>
+        </div>
+        <% } %>
+    
+        
+        <form action="/inv/add" method="POST">
+            
+            
+            <div class="form-group1">
+                <label for="classification_id">Classification:</label>
+                <%- classificationList %> 
+            </div>
+            <br>
+
+            <label for="make">Make:</label>
+            <input type="text" id="make" name="make" placeholder="Enter min of 3 words" required>
+            <br>
+    
+           
+            <label for="model">Model:</label>
+            <input type="text" id="model" name="model" required>
+            <br>
+    
+            
+            <label for="year">Year:</label>
+            <input type="number" id="year" name="year" min="1900" max="2099" required>
+            <br>
+    
+            
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+            <br>
+    
+            
+            <label for="price">Price ($):</label>
+            <input type="number" id="price" name="price" min="0" step="0.01" required>
+            <br>
+    
+            
+            <label for="miles">Miles:</label>
+            <input type="number" id="miles" name="miles" min="0" required>
+            <br>
+    
+            
+            <label for="color">Color:</label>
+            <input type="text" id="color" name="color" required>
+            <br>
+
+            
+    
+            <label for="image">Image Path:</label>
+            <input type="text" id="image" name="image" required>
+            <br>
+        
+            <label for="thumbnail">Thumbnail Path:</label>
+            <input type="text" id="thumbnail" name="thumbnail" required>
+            <br>
+            
+    
+            
+            <button class="button1" type="submit">Add Inventory</button>
+        </form>
+   
+    
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const form = document.querySelector("form");
+      const inputs = form.querySelectorAll("input, textarea, select");
+  
+      inputs.forEach(input => {
+        input.addEventListener("input", function() {
+          validateField(input);
+        });
+      });
+  
+      function validateField(field) {
+        if (field.checkValidity()) {
+          field.classList.remove("invalid");
+          field.classList.add("valid");
+        } else {
+          field.classList.remove("valid");
+          field.classList.add("invalid");
+        }
+      }
+    });
+  </script>
+  
+</html>
