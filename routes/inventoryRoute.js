@@ -19,6 +19,7 @@ router.get('/add', invController.buildAddInventory);
 // Adding new classification
 router.post('/classification/add', invController.addClassification);
 
+// get
 router.get('/add', invController.buildAddInventory);
 
 // adding new inventory
