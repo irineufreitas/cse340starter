@@ -4,22 +4,23 @@
     <!-- Flash Message Display -->
     <% if (messages.length > 0) { %>
         <div class="flash-messages">
-            <% messages.forEach(function(message) { %>
-                <p class="flash-message"><%= message %></p>
-            <% }); %>
+            <% for (let i = 0; i < messages.length; i++) { %>
+                <p class="flash-message"><%= messages[i] %></p>
+            <% } %>
         </div>
     <% } %>
+    
 
     <!-- Login Form -->
-    <form action="/login" method="POST" class="login-form">
+    <form id="loginForm" action="/account/login" method="POST" class="login-form">
         <div class="form-group">
             <label for="email">Email address:</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="account_email" name="account_email" required>
         </div>
 
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
+            <input type="password" id="account_password" name="account_password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
         </div>
 
         <button class="button1" type="submit">Login</button>

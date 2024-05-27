@@ -11,6 +11,11 @@ const inventoryRoute = require("./routes/inventoryRoute");
 const accountRoute = require("./routes/accountRoute");
 const errorHandlingMiddleware = require('./errorHandlingMiddleware');
 const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
+const bcrypt = require('bcrypt');
+
+const utilities = require('./utilities/index.js');
+
 
 // Middleware
 app.use(session({
@@ -32,6 +37,9 @@ app.use(function(req, res, next){
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+app.use(cookieParser())
+
+app.use(utilities.checkJWTToken)
 
 // View Engine and Templates
 app.set("view engine", "ejs");

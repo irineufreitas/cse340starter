@@ -108,7 +108,10 @@
 
 }
 
-
+.management-login {
+  background-color: white;
+  
+}
 
 .upgrades {
   display: grid;

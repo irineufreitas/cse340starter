@@ -8,9 +8,18 @@ router.get('/login', accountController.buildLogin);
 
 router.get('/register', accountController.buildRegister);
 
-router.post('/register', (accountController.registerAccount));
+//router.post('/register', (accountController.registerAccount));
 
-module.exports = router;
+router.get('/', accountController.buildAccountManagement);
+
+// Process the login request
+router.post(
+  "/login",
+  regValidate.loginRules(),
+  regValidate.checkLoginData,
+  accountController.accountLogin,
+  
+)
 
 // Process the registration data
 router.post(
@@ -19,3 +28,8 @@ router.post(
     regValidate.checkRegData,
     accountController.registerAccount
   )
+
+  // New route for management view
+router.get('/management', accountController.buildAccountManagement);
+
+  module.exports = router;
