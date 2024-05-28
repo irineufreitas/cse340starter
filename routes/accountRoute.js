@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const accountController = require('../controllers/accountController');
-const regValidate = require('../utilities/account-validation')
+const regValidate = require('../utilities/account-validation');
+const utilities = require('../utilities');
 
 // Render the login page
 router.get('/login', accountController.buildLogin);
@@ -30,6 +31,6 @@ router.post(
   )
 
   // New route for management view
-router.get('/management', accountController.buildAccountManagement);
+router.get('/management', utilities.checkLogin, accountController.buildAccountManagement);
 
   module.exports = router;

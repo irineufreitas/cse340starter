@@ -127,11 +127,24 @@ Util.checkJWTToken = (req, res, next) => {
   }
  }
 
+ /* ****************************************
+ *  Check Login
+ * ************************************ */
+ Util.checkLogin = (req, res, next) => {
+  if (res.locals.loggedin) {
+    next()
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+ }
+
 module.exports = {
   getNav: Util.getNav,
   buildClassificationGrid: Util.buildClassificationGrid,
   generateVehicleHTML: Util.generateVehicleHTML,
   handleErrors: Util.handleErrors,
   buildClassificationList: Util.buildClassificationList,
-  checkJWTToken: Util.checkJWTToken
+  checkJWTToken: Util.checkJWTToken,
+  checkLogin: Util.checkLogin
 };

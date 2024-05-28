@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Inventory</title>
+</head>
+<body>
+<div class="inventory-body">
+    <h1><%= title %></h1>
+
+    <% if (Array.isArray(messages) && messages.length > 0) { %>
+        <div class="flash-messages">
+            <% messages.forEach(function(message) { %>
+            <p class="flash-message"><%= message %></p>
+            <% }); %>
+        </div>
+    <% } %>
+
+    <form action="/inv/update" method="POST">
+        <div class="form-group1">
+            <label for="classification_id">Classification:</label>
+            <% if (typeof classificationList !== 'undefined') { %>
+                <%- classificationList %> 
+            <% } else { %>
+                <p>Error loading classification list.</p>
+            <% } %>
+        </div>
+        <br>
+
+        <label for="make">Make:</label>
+        <input type="text" id="make" name="make" placeholder="Enter min of 3 words" value="<%= formData.inv_make %>" required>
+        <br>
+
+        <label for="model">Model:</label>
+        <input type="text" id="model" name="model" value="<%= formData.inv_model %>" required>
+        <br>
+
+        <label for="year">Year:</label>
+        <input type="number" id="year" name="year" min="1900" max="2099" value="<%= formData.inv_year %>" required>
+        <br>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required><%= formData.inv_description %></textarea>
+        <br>
+
+        <label for="price">Price ($):</label>
+        <input type="number" id="price" name="price" min="0" step="0.01" value="<%= formData.inv_price %>" required>
+        <br>
+
+        <label for="miles">Miles:</label>
+        <input type="number" id="miles" name="miles" min="0" value="<%= formData.inv_miles %>" required>
+        <br>
+
+        <label for="color">Color:</label>
+        <input type="text" id="color" name="color" value="<%= formData.inv_color %>" required>
+        <br>
+
+        <label for="image">Image Path:</label>
+        <input type="text" id="image" name="image" value="<%= formData.inv_image %>" required>
+        <br>
+
+        <label for="thumbnail">Thumbnail Path:</label>
+        <input type="text" id="thumbnail" name="thumbnail" value="<%= formData.inv_thumbnail %>" required>
+        <br>
+
+        <button class="button1" type="submit">Update Vehicle</button>
+
+        <input type="hidden" name="inv_id" value="<%= formData.inv_id %>">
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.querySelector("form");
+        const inputs = form.querySelectorAll("input, textarea, select");
+
+        inputs.forEach(input => {
+            input.addEventListener("input", function() {
+                validateField(input);
+            });
+        });
+
+        function validateField(field) {
+            if (field.checkValidity()) {
+                field.classList.remove("invalid");
+                field.classList.add("valid");
+            } else {
+                field.classList.remove("valid");
+                field.classList.add("invalid");
+            }
+        }
+    });
+</script>
+</body>
+</html>

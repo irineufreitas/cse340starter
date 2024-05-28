@@ -73,11 +73,14 @@ invCont.buildManagement = async function (req, res) {
   try {
     const nav = await utilities.getNav();
     const title = "Inventory Management";
-    console.log("Title value:", title);
+    const classificationSelect = await utilities.buildClassificationList()
+    
     res.render("inventory/management", {
       title, 
       nav,
+      classificationSelect,
       messages: req.flash('info')
+      
     });
   } catch (error) {
     console.error("Error rendering management view:", error);
@@ -165,6 +168,114 @@ invCont.addInventory = async function(req, res) {
   }
 };
 
+/* ***************************
+ *  Return Inventory by Classification As JSON
+ * ************************** */
+invCont.getInventoryJSON = async (req, res, next) => {
+  const classification_id = parseInt(req.params.classification_id)
+  const invData = await invModel.getInventoryByClassificationId(classification_id)
+  if (invData[0].inv_id) {
+    return res.json(invData)
+  } else {
+    next(new Error("No data returned"))
+  }
+}
 
-// Export the controller functions
+//edit inventory
+invCont.buildEditInventory = async function(req, res) {
+  try {
+    const itemId = req.params.itemId;
+    const itemData = await invModel.getInventoryItemById(itemId); 
+    const nav = await utilities.getNav();
+    const classificationList = await utilities.buildClassificationList(itemData.classification_id);
+
+  
+    // Prepopulate form fields with existing data
+    const formData = {
+      inv_id: itemData.inv_id,
+      inv_make: itemData.inv_make,
+      inv_model: itemData.inv_model,
+      inv_year: itemData.inv_year,
+      inv_description: itemData.inv_description,
+      inv_image: itemData.inv_image,
+      inv_thumbnail: itemData.inv_thumbnail,
+      inv_price: itemData.inv_price,
+      inv_miles: itemData.inv_miles,
+      inv_color: itemData.inv_color,
+      classification_id: itemData.classification_id
+    };
+
+    const messages = req.flash('info') || []; // Ensure messages is always an array
+
+    res.render('inventory/edit-inventory', {
+      title: `Edit ${itemData.inv_make} ${itemData.inv_model}`,
+      nav,
+      formData, 
+      classificationList, // Pass classificationList to the view
+      messages
+    });
+  } catch (error) {
+    console.error("Error building edit inventory view:", error);
+    req.flash('info', 'An error occurred while loading the edit inventory view.');
+    res.redirect('/inv/management');
+  }
+};
+
+
+
+
+
+
+/* ***************************
+ *  Update Inventory Data
+ * ************************** */
+invCont.updateInventory = async function (req, res, next) {
+  try {
+    let nav = await utilities.getNav();
+    const {
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id,
+    } = req.body;
+
+    const updateResult = await invModel.updateInventory(
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id
+    );
+
+    if (updateResult) {
+      const itemName = updateResult.inv_make + " " + updateResult.inv_model;
+      req.flash("info", `The ${itemName} was successfully updated.`);
+      res.redirect("/inv/management");
+    } else {
+      // If the update fails, redirect to management with error flash message
+      req.flash("error", "Sorry, the update failed.");
+      res.redirect("/inv/management");
+    }
+  } catch (error) {
+    console.error("Error updating inventory:", error);
+    req.flash("error", "An error occurred while updating the inventory item.");
+    res.redirect("/inv/management");
+  }
+};
+
+
+
 module.exports = invCont;
