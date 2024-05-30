@@ -41,6 +41,33 @@ app.use(cookieParser())
 
 app.use(utilities.checkJWTToken)
 
+// make user info available 
+app.use((req, res, next) => {
+  res.locals.user = {
+    isAuthenticated: req.session.isAuthenticated || false,
+    account_firstname: req.session.account_firstname,
+    account_type: req.session.account_type,
+    account_id: req.session.account_id
+  };
+
+  // console.log("req.session:", req.session);
+  // console.log("res.locals.user:", res.locals.user);
+  // console.log("User info set in middleware. isAuthenticated:", req.session.isAuthenticated);
+  next();
+});
+
+app.use((req, res, next) => {
+  if (req.user) {
+    res.locals.user = {
+      ...res.locals.user,
+      ...req.user
+    };
+  }
+  next();
+});
+
+
+
 // View Engine and Templates
 app.set("view engine", "ejs");
 app.use(expressLayouts);

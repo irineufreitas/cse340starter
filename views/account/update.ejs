@@ -1,0 +1,55 @@
+
+<div class="update-account">
+<h1><%= title %></h1>
+
+<% if (Array.isArray(errors) && errors.length > 0) { %>
+    <div class="alert alert-danger" role="alert">
+      <ul>
+        <% errors.forEach(error => { %>
+          <li><%= error.msg %></li>
+        <% }); %>
+      </ul>
+    </div>
+<% } %>
+
+  
+<% if (Array.isArray(messages) && messages.length > 0) { %>
+    <div class="alert alert-success" role="alert">
+      <ul>
+        <% messages.forEach(message => { %>
+          <li><%= message %></li>
+        <% }); %>
+      </ul>
+    </div>
+<% } %>
+
+
+<!-- Account Update Form -->
+<form action="/account/update/<%= user.account_id %>" method="POST">
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" name="firstName" value="<%= user.account_firstname %>" required>
+  
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" name="lastName" value="<%= user.account_lastname %>" required>
+  
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="<%= user.account_email %>" required>
+
+  <!-- Hidden field for account_id -->
+  <input type="hidden" name="accountId" value="<%= user.account_id %>">
+
+  <button class="button1" type="submit">Update Account</button>
+</form>
+
+<!-- Change Password Form -->
+<form action="/account/change-password" method="POST">
+  <label for="newPassword">New Password:</label>
+  <input type="password" id="newPassword" name="newPassword" required>
+  <p>Password must meet requirements (length, characters, etc...)</p>
+
+  <!-- Hidden field for account_id -->
+  <input type="hidden" name="accountId" value="<%= user.account_id %>">
+
+  <button class="button1" type="submit">Change Password</button>
+</form>
+</div>

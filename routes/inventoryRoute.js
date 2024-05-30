@@ -1,10 +1,9 @@
 // Needed Resources 
-const express = require("express")
-const router = new express.Router() 
+const express = require("express");
+const router = express.Router();
 const invController = require("../controllers/invController");
-const utilities = require("../utilities");
-
-const inventoryValidation = require('../utilities/inventory-validation');
+const authMiddleware = require("../middleware/authMiddleware"); // Require the authMiddleware
+const inventoryValidation = require("../utilities/inventory-validation");
 const { newInventoryRules, checkUpdateData } = inventoryValidation;
 
 // Route to build inventory by classification view
@@ -14,29 +13,25 @@ router.get("/type/:classificationId", invController.buildByClassificationId);
 router.get("/detail/:itemId", invController.displayItemDetail);
 
 // Route for management
-router.get('/management', invController.buildManagement);
+router.get("/management", authMiddleware, invController.buildManagement); // Apply authMiddleware here
 
-router.get('/classification/add', invController.buildAddClassification);
+router.get("/classification/add", authMiddleware, invController.buildAddClassification); // Apply authMiddleware here
 
-router.get('/add', invController.buildAddInventory);
+// Route for adding new inventory
+router.get("/add", authMiddleware, invController.buildAddInventory); // Apply authMiddleware here
 
 // Adding new classification
-router.post('/classification/add', invController.addClassification);
+router.post("/classification/add", authMiddleware, invController.addClassification); // Apply authMiddleware here
 
-// get
-router.get('/add', invController.buildAddInventory);
+// Route for adding new inventory
+router.post("/add", authMiddleware, invController.addInventory); // Apply authMiddleware here
 
-// adding new inventory
-router.post('/add', invController.addInventory);
+router.get("/getInventory/:classification_id", invController.getInventoryJSON);
 
-router.get("/getInventory/:classification_id", invController.getInventoryJSON)
+// Route for editing items
+router.get("/edit/:itemId", authMiddleware, invController.buildEditInventory); // Apply authMiddleware here
 
-//edit items
-router.get('/edit/:itemId', utilities.checkLogin, invController.buildEditInventory);
-
-//post for updating
-router.post("/update/", newInventoryRules(), checkUpdateData, invController.updateInventory);
-
+// Route for updating inventory
+router.post("/update", authMiddleware, newInventoryRules(), checkUpdateData, invController.updateInventory); // Apply authMiddleware here
 
 module.exports = router;
-// 

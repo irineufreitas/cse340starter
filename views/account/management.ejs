@@ -1,4 +1,7 @@
+<% console.log(locals.user); %>
+
 <div class="management-login">
+  <h1><%= title %></h1>
   <% if (messages && Array.isArray(messages) && messages.length > 0) { %>
     <ul>
       <li><%= messages[0] %></li> <!-- Display the first message -->
@@ -11,5 +14,21 @@
     </ul>
   <% } %>
 
-  <h1>You're logged in</h1>
+  
+  <% if (locals.user && locals.user.isAuthenticated) { %>
+    <% if (locals.user.account_type === 'Client') { %>
+      <h2>Welcome <%= locals.user.account_firstname %></h2>
+      <a href="/account/update/">Update Account Information</a>
+    <% } else if (locals.user.account_type === 'Employee' || locals.user.account_type === 'Admin') { %>
+      <h2>Welcome <%= locals.user.account_firstname %></h2>
+
+      <h4>You're logged in</h4>
+      <a href="/account/update/">Edit Account Information</a>
+      <h3>Inventory Management</h3>
+      <p><a href="/inv/management">Manage Inventory</a></p>
+      
+    <% } %>
+  <% } else { %>
+    <h1>You're logged in</h1>
+  <% } %>
 </div>
