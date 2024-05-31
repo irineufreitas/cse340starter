@@ -34,7 +34,6 @@ router.get('/management', authMiddleware,utilities.checkLogin, accountController
 // Add logout route
 router.get('/logout', accountController.accountLogout);
 
-// accountRoute.js
 
 // Route to render the update account information form
 router.get("/update", authMiddleware, accountController.renderUpdateAccountForm); 

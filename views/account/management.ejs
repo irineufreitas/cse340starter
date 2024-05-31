@@ -1,4 +1,4 @@
-<% console.log(locals.user); %>
+<% console.log(locals.accountData); %>
 
 <div class="management-login">
   <h1><%= title %></h1>
@@ -14,13 +14,12 @@
     </ul>
   <% } %>
 
-  
-  <% if (locals.user && locals.user.isAuthenticated) { %>
-    <% if (locals.user.account_type === 'Client') { %>
-      <h2>Welcome <%= locals.user.account_firstname %></h2>
+  <% if (locals.loggedin) { %>
+    <% if (locals.accountData.account_type === 'Client') { %>
+      <h2>Welcome <%= locals.accountData.account_firstname %></h2>
       <a href="/account/update/">Update Account Information</a>
-    <% } else if (locals.user.account_type === 'Employee' || locals.user.account_type === 'Admin') { %>
-      <h2>Welcome <%= locals.user.account_firstname %></h2>
+    <% } else if (locals.accountData.account_type === 'Employee' || locals.accountData.account_type === 'Admin') { %>
+      <h2>Welcome <%= locals.accountData.account_firstname %></h2>
 
       <h4>You're logged in</h4>
       <a href="/account/update/">Edit Account Information</a>
@@ -29,6 +28,6 @@
       
     <% } %>
   <% } else { %>
-    <h1>You're logged in</h1>
+    <h1>Please log in</h1>
   <% } %>
 </div>
