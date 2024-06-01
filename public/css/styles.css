@@ -264,10 +264,100 @@ input[type="password"] {
   margin-top: 10px;
   text-align: center;
 }
+.button-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 150px 150px;
+  align-items: center; 
+  
+}
+.reviews-management {
+  margin: 20px 0;
+}
 
+.review-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.review-content {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.review-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.button4 {
+  padding: 5px 10px;
+  background-color: #007BFF;
+  color: black;
+  font-weight: 400;
+  border: 1px solid #19426e;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 3px;
+  min-width: 60px; /* Ensure the buttons are the same width */
+}
+
+.edit-review textarea {
+  border: 2px solid #ccc;
+  transition: border-color 0.3s ease;
+}
+.button4:hover {
+  background-color: #0056b3;
+}
+
+.delete-form {
+  margin: 0;
+}
+
+
+
+.button2 {
+  
+  padding: 5px;
+  background-color: #007BFF;
+  color: black;
+  font-weight: 400;
+  border: 1px solid #19426e;
+  cursor: pointer;
+  text-align: center;
+  
+}
+
+.button3 {
+  background-color: #007BFF;
+  color: black;
+  font-weight: 400;
+  border: 1px solid #19426e;
+  cursor: pointer;
+  text-align: center;
+  padding: 10px;
+}
+
+.button3:hover{
+  opacity: 0.8;
+}
 .button1:hover {
   background-color: #0056b3;
   opacity: 0.8;
+}
+.button2:hover {
+  background-color: #0056b3;
+  opacity: 0.8;
+}
+.review-container {
+  text-align: center;
+  width: 100%;
+  padding: 30px;
 }
 
 form {
@@ -309,6 +399,10 @@ select.valid {
   border-color: green;
 }
 
+.edit-review {
+  background-color: white;
+  padding: 20px;
+}
 textarea {
   height: 100px;
   resize: vertical;

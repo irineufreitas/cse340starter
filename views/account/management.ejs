@@ -2,32 +2,62 @@
 
 <div class="management-login">
   <h1><%= title %></h1>
-  <% if (messages && Array.isArray(messages) && messages.length > 0) { %>
-    <ul>
-      <li><%= messages[0] %></li> <!-- Display the first message -->
-    </ul>
+  <% if (messages && messages.length > 0) { %>
+    <div class="alert alert-success" role="alert">
+      <ul>
+        <% messages.forEach(message => { %>
+          <li><%= message %></li>
+        <% }); %>
+      </ul>
+    </div>
   <% } %>
 
-  <% if (errors && Array.isArray(errors) && errors.length > 0) { %>
-    <ul>
-      <li><%= errors[0].msg %></li> <!-- Display the message of the first error -->
-    </ul>
+  <% if (errors && errors.length > 0) { %>
+    <div class="alert alert-danger" role="alert">
+      <ul>
+        <% errors.forEach(error => { %>
+          <li><%= error %></li>
+        <% }); %>
+      </ul>
+    </div>
   <% } %>
 
   <% if (locals.loggedin) { %>
-    <% if (locals.accountData.account_type === 'Client') { %>
-      <h2>Welcome <%= locals.accountData.account_firstname %></h2>
-      <a href="/account/update/">Update Account Information</a>
-    <% } else if (locals.accountData.account_type === 'Employee' || locals.accountData.account_type === 'Admin') { %>
-      <h2>Welcome <%= locals.accountData.account_firstname %></h2>
+    <h2>Welcome <%= locals.accountData.account_firstname %></h2>
+    <a href="/account/update/">Update Account Information</a>
 
-      <h4>You're logged in</h4>
-      <a href="/account/update/">Edit Account Information</a>
+    <% if (locals.accountData.account_type === 'Employee' || locals.accountData.account_type === 'Admin') { %>
       <h3>Inventory Management</h3>
       <p><a href="/inv/management">Manage Inventory</a></p>
+    <% } %>
+
+    <h3>Your Reviews</h3>
+    <% if (reviews && reviews.length > 0) { %>
+      <div class="reviews-management">
+        <ol>
+          <% reviews.forEach(review => { %>
+            <li class="review-item">
+              <div class="review-content">
+                <p><%= review.review_text %></p>
+                <small>Reviewed <%= review.car_make %> <%= review.car_model %> on <%= new Date(review.review_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></small>
+              </div>
+              
+                <a href="/reviews/edit/<%= review.review_id %>" class="button4">Edit</a>
+                <div class="review-actions">
+                <form action="/reviews/delete/<%= review.review_id %>" method="POST" class="delete-form">
+                  <button class="button4" type="submit">Delete</button>
+                </form>
+              </div>
+            </li>
+          <% }); %>
+        </ol>
+      </div>
       
+    <% } else { %>
+      <p>You have not written any reviews yet.</p>
     <% } %>
   <% } else { %>
     <h1>Please log in</h1>
   <% } %>
 </div>
+

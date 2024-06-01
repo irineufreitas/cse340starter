@@ -15,7 +15,7 @@ const cookieParser = require("cookie-parser")
 const bcrypt = require('bcrypt');
 
 const utilities = require('./utilities/index.js');
-
+const reviewRoute = require('./routes/reviewRoute');
 
 // Middleware
 app.use(session({
@@ -84,6 +84,9 @@ app.use("/inv", inventoryRoute);
 
 // Account routes
 app.use("/account", accountRoute);
+
+//review routes
+app.use('/reviews', reviewRoute);
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {

@@ -1,0 +1,55 @@
+<div class="edit-review">
+    <h1><%= title %></h1>
+
+    <% if (Array.isArray(errors) && errors.length > 0) { %>
+        <div class="alert alert-danger" role="alert">
+            <ul>
+                <% errors.forEach(error => { %>
+                    <li><%= error.msg %></li>
+                <% }); %>
+            </ul>
+        </div>
+    <% } %>
+
+    <% if (messages && messages.length > 0) { %>
+        <div class="alert alert-success" role="alert">
+            <ul>
+                <% messages.forEach(message => { %>
+                    <li><%= message %></li>
+                <% }); %>
+            </ul>
+        </div>
+    <% } %>
+
+    <form action="/reviews/update/<%= review.review_id %>" method="POST" onsubmit="return validateReviewForm()">
+        <label for="review_text">Edit your review:</label>
+        <textarea id="review_text" name="review_text" required oninput="validateReviewInput()"><%= review.review_text %></textarea>
+        <button class="button1" type="submit">Update Review</button>
+    </form>
+</div>
+
+<script>
+  function validateReviewForm() {
+    const reviewText = document.getElementById('review_text').value.trim();
+    const wordCount = reviewText.split(/\s+/).length;
+
+    if (wordCount < 3) {
+      alert('Review must contain at least 3 words.');
+      return false;
+    }
+    return true;
+  }
+
+  function validateReviewInput() {
+    const reviewText = document.getElementById('review_text').value.trim();
+    const wordCount = reviewText.split(/\s+/).length;
+
+    if (wordCount < 3) {
+      document.getElementById('review_text').style.borderColor = 'red';
+    } else {
+      document.getElementById('review_text').style.borderColor = 'green';
+    }
+  }
+</script>
+
+

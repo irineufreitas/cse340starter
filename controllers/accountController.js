@@ -3,6 +3,7 @@ const accountModel = require('../models/account-model');
 const utilities = require('../utilities')
 const jwt = require("jsonwebtoken")
 const bcrypt = require('bcrypt');
+const reviewModel = require("../models/review-model");
 
 require("dotenv").config()
 
@@ -190,7 +191,12 @@ async function buildAccountManagement(req, res, next) {
   if (!Array.isArray(messages)) {
     messages = [messages];
   }
-  console.log("res.locals.user:", res.locals.user);
+  // console.log("res.locals.user:", res.locals.user);
+
+  // Fetch account data and reviews by the logged-in user
+  const accountId = req.session.account_id;
+  const reviews = await reviewModel.getReviewsByAccountId(accountId);
+
   // Check the account type
   const accountType = res.locals.user.account_type;
 
@@ -208,7 +214,8 @@ async function buildAccountManagement(req, res, next) {
     nav,
     messages,
     errors,
-    greeting // Pass greeting to the view
+    greeting,
+    reviews // Pass greeting to the view
   });
 }
 
@@ -294,5 +301,26 @@ async function renderUpdateAccountForm(req, res) {
   }
 }
 
+const getAccountAdmin = async (req, res) => {
+  const { account_id } = req.user;
+  try {
+    const userReviewsQuery = `SELECT reviews.*, inventory.inv_make, inventory.inv_model
+                              FROM reviews
+                              JOIN inventory ON reviews.inv_id = inventory.inv_id
+                              WHERE account_id = $1
+                              ORDER BY review_date DESC`;
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagement, accountLogout, updateAccountInformation, changePassword, renderUpdateAccountForm };
+    const userReviewsResult = await pool.query(userReviewsQuery, [account_id]);
+
+    const userReviews = userReviewsResult.rows;
+
+    res.render('accountAdmin', { user: req.user, userReviews });
+  } catch (error) {
+    console.error('Error getting account details:', error);
+    res.redirect('/');
+  }
+};
+
+
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagement, accountLogout, updateAccountInformation, changePassword, renderUpdateAccountForm, getAccountAdmin };

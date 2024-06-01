@@ -2,6 +2,7 @@ const invModel = require("../models/inventory-model");
 const utilities = require("../utilities/");
 const { Util } = require("../utilities/");
 const { buildClassificationList } = require("../utilities/");
+const reviewModel = require("../models/review-model");
 
 const invCont = {};
 
@@ -37,18 +38,33 @@ invCont.buildByClassificationId = async function (req, res, next) {
  * ************************** */
 invCont.displayItemDetail = async function (req, res) {
   try {
-    // Retrieve item ID from URL parameter
-    const itemId = req.params.itemId;
+    const itemId = parseInt(req.params.itemId, 10);  // Ensure itemId is parsed as an integer
+
+    if (isNaN(itemId)) {
+      throw new Error("Invalid item ID");
+    }
 
     const nav = await utilities.getNav();
-    // Call function from model to retrieve data for the specific item
-    const itemData = await invModel.getInventoryItemById(itemId); // Replace with your actual model function
+    const itemData = await invModel.getInventoryItemById(itemId);
 
-  
-    // Render the detail view template with the retrieved data
-    res.render("inventory/detail", { 
-      title: "Vehicle Details",
-      nav: nav,
+    // Retrieve reviews for the specific item
+    const reviews = await reviewModel.getReviewsByItemId(itemId);
+
+    // Flash messages
+    let messages = req.flash('info') || [];
+    let errors = req.flash('error') || [];
+
+    // Ensure messages and errors are arrays
+    if (!Array.isArray(messages)) {
+      messages = [messages];
+    }
+    if (!Array.isArray(errors)) {
+      errors = [errors];
+    }
+
+    // Construct the inventory object
+    const inventory = {
+      inv_id: itemData.inv_id,
       make: itemData.inv_make,
       model: itemData.inv_model,
       year: itemData.inv_year,
@@ -58,15 +74,26 @@ invCont.displayItemDetail = async function (req, res) {
       price: itemData.inv_price,
       miles: itemData.inv_miles,
       color: itemData.inv_color
-  });
-   
+    };
 
+    // Render the detail view template with the retrieved data
+    res.render("inventory/detail", { 
+      title: "Vehicle Details",
+      nav: nav,
+      inventory: inventory,
+      reviews: reviews,
+      messages,
+      errors,
+      accountData: res.locals.user // Pass account data if available
+    });
   } catch (error) {
     // Handle errors
     console.error("Error displaying item detail:", error);
     res.status(500).send("Error displaying item detail");
   }
 };
+
+  
 
 // management
 invCont.buildManagement = async function (req, res) {
